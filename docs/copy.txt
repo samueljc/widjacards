@@ -1,0 +1,21 @@
+Pull all of your <> cards from your deck and reshuffle your deck.
+
+Kills <> in one hit regardless of power levels.
+
+Gains <> power for each <> it defeats.
+
+Gains <> power for each active <>.
+
+If played with <> gains <> power.
+
+Removes <> power from one of your opponent's characters when played.
+
+Grants <> power to all active characters when played.
+
+Grants <> power to all active characters while in play.
+
+Can only be summoned if the player's <> is in the grave.
+
+Can only be summoned by sacrificing <>.
+
+While attacking its power is increased by <>.

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76fc68b9e197ff848b0be60cbc07128f, type: 3}
+  m_Name: Qooq
+  m_EditorClassIdentifier: 
+  type: 0
+  Title: Qooq
+  Description: It's a floater!
+  Power: 100
+  Graphic: {fileID: 0}
+  Affiliation: 2
+  rarity: 100
+  Noses: 0
+  Ears: 0
+  Eyes: 0
+  Mouths: 0
