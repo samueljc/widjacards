@@ -44,3 +44,6 @@ TagManager:
   - name: Bubbles
     uniqueID: 2027178309
     locked: 0
+  - name: Hover
+    uniqueID: 620954155
+    locked: 0
