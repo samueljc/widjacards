@@ -54,29 +54,30 @@ public class BattleConnection : MonoBehaviour {
   }
 
   public void DrawCard(string playerID) {
+    // Check the player status.
     Player player = this.players[playerID];
     if (!this.IsControllingPlayer(player, playerID)) {
-      // insufficient permissions
+      Debug.LogErrorFormat("invalid player: {0}", playerID);
       return;
     }
-
     if (player.Status != PlayerStatus.DRAW && player.Status != PlayerStatus.PLAY) {
-      // can't draw; invalid state
+      Debug.LogErrorFormat("invalid status (wait your turn): {0}", player.Status.ToString());
       return;
     }
-
-    if (player.Deck.Count == 0) {
-      // can't draw; no cards
-      return;
-    }
-
     if (player.AvailableDraws == 0) {
-      // already drew cards
+      Debug.LogError("draws exceeded");
       return;
     }
 
+    // Make sure there's still cards in the deck?
+    if (player.Deck.Count == 0) {
+      Debug.LogError("deck is empty");
+      return;
+    }
+
+    // Check the hand status.
     if (player.Hand.Full) {
-      // no space for drawing cards
+      Debug.LogError("hand is full");
       return;
     }
 
@@ -85,49 +86,61 @@ public class BattleConnection : MonoBehaviour {
   }
 
   public void PlayCard(string playerID, string cardID) {
+    // Check the player status.
     Player player = this.players[playerID];
     if (!this.IsControllingPlayer(player, playerID)) {
-      // insufficient permissions
+      Debug.LogErrorFormat("invalid player: {0}", playerID);
       return;
     }
-
-
     if (player.Status != PlayerStatus.PLAY) {
-      // can't play
+      Debug.LogErrorFormat("invalid status (wait your turn): {0}", player.Status.ToString());
       return;
     }
 
+    // Check the field status.
     if (player.Field.Full) {
-      // can't play; no space
+      Debug.LogError("field is full");
       return;
     }
 
+    // Check the card status.
     CardModel card = player.Hand.Find(cardID);
     if (card == null) {
-      // invalid card
+      Debug.LogError("card not found");
       return;
     }
 
     // play the card in the field
+    player.Hand.Remove(cardID);
     player.Field.Add(card);
   }
 
   public void Attack(string attackerID, string attackerCardID, string defenderID, string defenderCardID) {
+    // Check the attacker status.
     Player attacker = this.players[attackerID];
     if (!this.IsControllingPlayer(attacker, attackerID)) {
-      // insufficient permissions
+      Debug.LogErrorFormat("invalid attacker: {0}", attackerID);
       return;
     }
-
     if (attacker.Status != PlayerStatus.PLAY) {
-      // can't play; not your turn
+      Debug.LogErrorFormat("invalid status (wait your turn): {0}", attacker.Status.ToString());
       return;
     }
 
+    // Check the defender status.
     Player defender = this.players[defenderID];
+    if (defender == null) {
+      Debug.LogErrorFormat("invalid defender: {0}", defenderID);
+      return;
+    }
 
-    if (!attacker.Hand.Contains(attackerCardID) || !defender.Hand.Contains(defenderCardID)) {
-      // invalid card
+    // Check the card status.
+    if (!attacker.Field.Contains(attackerCardID)){
+      Debug.LogError("attacker card not found");
+      return;
+    }
+    if (!defender.Field.Contains(defenderCardID)) {
+      Debug.LogError("defender card not found");
       return;
     }
 

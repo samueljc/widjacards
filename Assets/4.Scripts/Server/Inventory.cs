@@ -44,7 +44,7 @@ public class Inventory : IEnumerable<CardModel> {
   }
 
   public bool Contains(string cardID) {
-    return this.list.Find(c => cardID == c.ID) == null;
+    return this.list.Find(c => cardID == c.ID) != null;
   }
 
   public CardModel Find(string cardID) {
@@ -62,17 +62,23 @@ public class Inventory : IEnumerable<CardModel> {
   }
 
   public void Remove(CardModel model) {
-    this.list.Remove(model);
-    this.change?.Invoke();
+    if (this.list.Remove(model)) {
+      this.change?.Invoke();
+    }
   }
 
   public void Remove(string cardID) {
     int index = this.list.FindIndex(c => cardID == c.ID);
-    this.list.RemoveAt(index);
-    this.change?.Invoke();
+    if (index != -1) {
+      this.list.RemoveAt(index);
+      this.change?.Invoke();
+    }
   }
 
   public CardModel Pop() {
+    if (this.list.Count == 0) {
+      return null;
+    }
     CardModel card = this.list[this.list.Count - 1];
     this.list.RemoveAt(this.list.Count - 1);
     this.change?.Invoke();
