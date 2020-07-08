@@ -11,8 +11,6 @@ public class InventoryCardController : MonoBehaviour, IPointerEnterHandler, IPoi
 
   private RectTransform rectTransform;
 
-  private Canvas canvas;
-
   private Canvas rootCanvas;
 
   private CanvasGroup canvasGroup;
@@ -25,8 +23,7 @@ public class InventoryCardController : MonoBehaviour, IPointerEnterHandler, IPoi
 
   private void Awake() {
     this.rectTransform = this.GetComponent<RectTransform>();
-    this.canvas = this.GetComponent<Canvas>();
-    this.rootCanvas = this.canvas.rootCanvas;
+    this.rootCanvas = this.GetComponentInParent<Canvas>().rootCanvas;
     this.canvasGroup = this.GetComponent<CanvasGroup>();
   }
 
@@ -88,10 +85,8 @@ public class InventoryCardController : MonoBehaviour, IPointerEnterHandler, IPoi
 
   private void UpdateFocussed() {
     if (this.hovered || this.dragging) {
-      this.canvas.sortingOrder = 3;
       this.rectTransform.localScale = new Vector3(this.HoverScale, this.HoverScale, 0f);
     } else {
-      this.canvas.sortingOrder = 0;
       this.rectTransform.localScale = new Vector3(1f, 1f, 0f);
     }
   }

@@ -27,7 +27,7 @@ public class HandController : InventoryField {
     this.player = null;
   }
 
-  protected override GameObject InstantiateCard(in CardModel model) {
+  protected override GameObject InstantiateCard(CardModel model) {
     if (this.playerID.Value != this.player.PrivateID) {
       return GameObject.Instantiate(this.cardBackPrefab, this.rectTransform);
     }

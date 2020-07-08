@@ -34,33 +34,35 @@ public class CardView : MonoBehaviour {
 
     set {
       this.model = value;
-      this.title.text = this.model.Title;
-      this.description.text = this.model.Description;
-      this.power.text = this.model.Power.ToString();
-      this.graphic.sprite = this.model.Graphic;
+      this.title?.SetText(this.model.Title);
+      this.description?.SetText(this.model.Description);
+      this.power?.SetText(this.model.Power.ToString());
+      this.power?.gameObject.SetActive(this.model.Type == CardType.CHARACTER);
+      if (this.graphic) {
+        this.graphic.sprite = this.model.Graphic;
+      }
       // set the card type icon
       switch (this.model.Type) {
         case CardType.CHARACTER:
-          this.power.gameObject.SetActive(true);
           break;
         case CardType.ENCHANTMENT:
-          this.power.gameObject.SetActive(false);
           break;
         case CardType.SPELL:
-          this.power.gameObject.SetActive(false);
           break;
       }
       // set the affiliation icon
-      switch (this.model.Affiliation) {
-        case Affiliation.HERO:
-          this.typeIcon.sprite = heroIcon;
-          break;
-        case Affiliation.VILLAIN:
-          this.typeIcon.sprite = villainIcon;
-          break;
-        case Affiliation.NONE:
-          this.typeIcon.sprite = neutralIcon;
-          break;
+      if (this.typeIcon != null) {
+        switch (this.model.Affiliation) {
+          case Affiliation.HERO:
+            this.typeIcon.sprite = heroIcon;
+            break;
+          case Affiliation.VILLAIN:
+            this.typeIcon.sprite = villainIcon;
+            break;
+          case Affiliation.NONE:
+            this.typeIcon.sprite = neutralIcon;
+            break;
+        }
       }
       // set the other detail icons
     }

@@ -135,16 +135,23 @@ public class BattleConnection : MonoBehaviour {
     }
 
     // Check the card status.
-    if (!attacker.Field.Contains(attackerCardID)){
+    CardModel attackerCard = attacker.Field.Find(attackerCardID);
+    if (attackerCard == null){
       Debug.LogError("attacker card not found");
       return;
     }
-    if (!defender.Field.Contains(defenderCardID)) {
+    CardModel defenderCard = defender.Field.Find(defenderCardID);
+    if (defenderCard == null) {
       Debug.LogError("defender card not found");
       return;
     }
 
-    // TODO: perform attack
+    // TODO: roll for attack
+    // TODO: attack effects
+    if (defenderCard.Power < attackerCard.Power) {
+      defender.Field.Remove(defenderCardID);
+      defender.Grave.Add(defenderCard);
+    }
   }
 
   public void EndTurn(string playerID) {

@@ -42,7 +42,7 @@ public abstract class InventoryField : MonoBehaviour {
     this.invalidated = true;
   }
 
-  protected abstract GameObject InstantiateCard(in CardModel model);
+  protected abstract GameObject InstantiateCard(CardModel model);
 
   protected virtual void Revalidate() {
     // Remove anything that shouldn't be here and keep track of the cards

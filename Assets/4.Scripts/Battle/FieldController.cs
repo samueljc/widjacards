@@ -26,18 +26,32 @@ public class FieldController : InventoryField, IDropHandler {
   }
 
   public void OnDrop(PointerEventData eventData) {
-    CardView card = eventData.pointerDrag.GetComponent<CardView>();
+    CardView card = eventData.pointerDrag?.GetComponent<CardView>();
     if (card == null) {
-      // TODO: handle error? Not much of an error here...
+      Debug.LogError("no card dropped");
       return;
     }
-
     this.connection.PlayCard(this.playerID.Value, card.Model.ID);
   }
 
-  protected override GameObject InstantiateCard(in CardModel model) {
-    CardView view = GameObject.Instantiate(this.cardPrefab, this.rectTransform);
-    view.Model = model;
-    return view.gameObject;
+  protected override GameObject InstantiateCard(CardModel model) {
+    CardView card = GameObject.Instantiate(this.cardPrefab, this.rectTransform);
+    card.Model = model;
+    // If this is not the controlling player, then this is an attack target.
+    if (this.playerID.Value != this.player.PrivateID) {
+      Defender target = card.gameObject.AddComponent<Defender>();
+      target.DefenderID = playerID.Value;
+    } else {
+      Attacker character = card.gameObject.AddComponent<Attacker>();
+      character.Attack = (string defenderID, string defenderCardID) => {
+        this.connection.Attack(
+          this.playerID.Value,
+          model.ID,
+          defenderID,
+          defenderCardID
+        );
+      };
+    }
+    return card.gameObject;
   }
 }

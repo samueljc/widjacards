@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   padding: 8
-  cardPrefab: {fileID: 8236465916515943195, guid: a51d3d870c90396448678100389f26db,
+  cardPrefab: {fileID: 8835679468336849001, guid: 5f73403aaac0b134ea7cd0319f6e7c96,
     type: 3}
   connection: {fileID: 0}
   playerID: {fileID: 0}
